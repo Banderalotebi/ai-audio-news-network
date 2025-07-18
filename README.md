@@ -49,7 +49,7 @@ ai-audio-news-network/
 ### Option 1: Docker (Recommended)
 ```bash
 # Clone and configure
-git clone <repository>
+git clone https://github.com/Banderalotebi/ai-audio-news-network.git
 cd ai-audio-news-network
 cp .env.example .env
 # Edit .env with your API keys
