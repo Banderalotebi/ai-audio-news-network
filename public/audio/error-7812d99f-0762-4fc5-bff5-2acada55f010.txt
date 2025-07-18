@@ -1,0 +1,8 @@
+Audio Generation Error
+
+Failed to generate speech for: "Good evening.  While we're experiencing a temporary technical glitch affecting our data feeds, we can still bring you this: The rapid advancements in artificial intelligence continue to dominate the tech landscape.  Companies are pushing boundaries daily, though specifics remain unavailable at this moment due to a temporary data access issue.  We'll keep you updated as this situation develops.  Now, on to other news...
+"
+
+Error: Request failed with status code 401
+
+Please check your ElevenLabs API configuration.

@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "female",
+  "text": "Breaking news. OpenAI, the leading artificial intelligence research company, has just unveiled a revolutionary new chip that promises to dramatically accelerate the pace of AI development.  They're ca...",
+  "duration": 87,
+  "timestamp": "2025-07-18T07:37:46.582Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "neutral",
+  "text": "Breaking news.  We interrupt this program for an urgent update on the conflict in Ukraine.  Ukrainian forces have launched a major counteroffensive in the southern Zaporizhzhia Oblast, targeting Russi...",
+  "duration": 94,
+  "timestamp": "2025-07-18T09:30:06.561Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

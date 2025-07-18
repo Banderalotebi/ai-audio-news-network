@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎙️ AI Audio News Network - Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .result {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .result h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+        
+        .result p {
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        
+        .audio-player {
+            margin: 15px 0;
+        }
+        
+        audio {
+            width: 100%;
+            border-radius: 10px;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        
+        .status.success {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+        
+        .status.error {
+            background: rgba(244, 67, 54, 0.3);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+        }
+        
+        .api-info {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .api-info code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ AI Audio News Network</h1>
+        <p style="text-align: center; margin-bottom: 30px; opacity: 0.9;">
+            Real-time AI-powered news with voice synthesis
+        </p>
+        
+        <div class="button-group">
+            <button onclick="fetchNews()">📰 Get Breaking News</button>
+            <button onclick="fetchAudioNews()">🔊 Generate Audio News</button>
+            <button onclick="checkStatus()">💡 Check Status</button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Generating news...</p>
+        </div>
+        
+        <div class="result" id="result">
+            <h3 id="resultTitle">📰 Latest News</h3>
+            <p><strong>Headline:</strong> <span id="headline"></span></p>
+            <p><strong>Script:</strong> <span id="script"></span></p>
+            <p><strong>Timestamp:</strong> <span id="timestamp"></span></p>
+            <div id="audioContainer" class="audio-player" style="display: none;">
+                <p><strong>🔊 Audio:</strong></p>
+                <audio id="audioPlayer" controls>
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+        
+        <div id="status"></div>
+        
+        <div class="api-info">
+            <h3>🚀 API Endpoints</h3>
+            <p><code>GET /api/news/breaking</code> - Get latest news text</p>
+            <p><code>GET /api/news/breaking/audio</code> - Get news with audio</p>
+            <p><code>GET /api/news/status</code> - Check service status</p>
+            <p><code>GET /health</code> - Server health check</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        
+        function showLoading(show = true) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            document.querySelectorAll('button').forEach(btn => btn.disabled = show);
+        }
+        
+        function showStatus(message, type = 'success') {
+            const statusEl = document.getElementById('status');
+            statusEl.innerHTML = `<div class="status ${type}">${message}</div>`;
+            setTimeout(() => statusEl.innerHTML = '', 5000);
+        }
+        
+        function showResult(data, hasAudio = false) {
+            const resultEl = document.getElementById('result');
+            const audioContainer = document.getElementById('audioContainer');
+            
+            document.getElementById('headline').textContent = data.headline || 'N/A';
+            document.getElementById('script').textContent = data.script || 'N/A';
+            document.getElementById('timestamp').textContent = data.timestamp || 'N/A';
+            
+            if (hasAudio && data.audioUrl) {
+                const audioPlayer = document.getElementById('audioPlayer');
+                audioPlayer.src = API_BASE + data.audioUrl;
+                audioContainer.style.display = 'block';
+                showStatus('🔊 Audio news generated successfully! Click play to listen.', 'success');
+            } else {
+                audioContainer.style.display = 'none';
+                showStatus('📰 News fetched successfully!', 'success');
+            }
+            
+            resultEl.style.display = 'block';
+        }
+        
+        async function fetchNews() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/api/news/breaking`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                showResult(data, false);
+            } catch (error) {
+                showStatus(`❌ Error fetching news: ${error.message}`, 'error');
+                console.error('Error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        async function fetchAudioNews() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/api/news/breaking/audio`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                showResult(data, true);
+            } catch (error) {
+                showStatus(`❌ Error generating audio: ${error.message}`, 'error');
+                console.error('Error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        async function checkStatus() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/api/news/status`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const data = await response.json();
+                showStatus(`✅ ${data.message} - ${data.status.toUpperCase()}`, 'success');
+            } catch (error) {
+                showStatus(`❌ Service check failed: ${error.message}`, 'error');
+                console.error('Error:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Auto-check status on load
+        window.addEventListener('load', checkStatus);
+    </script>
+</body>
+</html>

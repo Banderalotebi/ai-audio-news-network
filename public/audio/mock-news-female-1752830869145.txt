@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "female",
+  "text": "Breaking news.  We interrupt this program for an urgent report from the front lines in Ukraine. Ukrainian forces have launched a major counteroffensive in the southern Zaporizhzhia Oblast.  This morni...",
+  "duration": 84,
+  "timestamp": "2025-07-18T09:27:49.146Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

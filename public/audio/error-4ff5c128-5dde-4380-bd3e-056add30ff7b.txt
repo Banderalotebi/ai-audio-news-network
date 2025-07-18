@@ -1,0 +1,8 @@
+Audio Generation Error
+
+Failed to generate speech for: "Good evening.  While we're experiencing a temporary technical delay in accessing the full details on today's tech advancements, we can confirm that the rapid progress in Artificial Intelligence continues to dominate headlines.  Major tech firms are pushing the boundaries of AI capabilities, although specific details are currently unavailable. We apologize for the interruption and will bring you the full story as soon as possible.
+"
+
+Error: Request failed with status code 401
+
+Please check your ElevenLabs API configuration.

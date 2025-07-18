@@ -1,0 +1,7 @@
+Audio Generation Error
+
+Failed to generate speech for: "Breaking news.  International talks in Geneva aimed at controlling the development of artificial intelligence have just collapsed.  Delegates from around the world failed to reach an agreement on crucial issues, leaving the global community vulnerable to a potential AI arms race.  The central sticking point? Accountability for the development and use of lethal autonomous weapons –  essentially, robots capable of killing without human intervention.  Experts are warning that the lack of a global framework dramatically increases the risk of catastrophic misuse of this powerful technology, with potentially devastating unintended consequences.  The failure to establish oversight mechanisms is a major setback for international security. We'll continue to follow this story and bring you updates as they develop."
+
+Error: Request failed with status code 401
+
+Please check your ElevenLabs API configuration.

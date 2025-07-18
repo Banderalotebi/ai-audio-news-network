@@ -1,0 +1,7 @@
+Audio Generation Error
+
+Failed to generate speech for: "Breaking news.  International talks aimed at establishing global AI governance have collapsed.  Negotiations in Geneva, designed to create international standards for artificial intelligence, have ended abruptly, sources confirm.  Delegates reportedly reached an impasse over critical issues surrounding data security and the very real threat of AI-driven cyber warfare.  The failure to reach an agreement raises serious concerns about the unchecked spread of advanced AI technologies worldwide, leaving a significant gap in international regulation and oversight. This is a major setback for efforts to ensure the responsible development and use of AI, leaving the global community vulnerable to potential misuse. We’ll continue to follow this story and bring you updates as they develop. Stay tuned."
+
+Error: Request failed with status code 401
+
+Please check your ElevenLabs API configuration.

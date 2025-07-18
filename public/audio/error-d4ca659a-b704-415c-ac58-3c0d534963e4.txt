@@ -1,0 +1,9 @@
+Audio Generation Error
+
+Failed to generate speech for: "Good evening.  The Global AI Safety Summit in Geneva has concluded, and while there's been a deal, it's far from a decisive victory for those pushing for strong AI regulation.  The summit ended with an agreement on voluntary guidelines for the development of artificial intelligence, a compromise that's been met with mixed reactions.
+
+Major tech companies have pledged to increase safety protocols, but critics are already voicing concerns.  The non-binding nature of these guidelines means there's no real enforcement mechanism, leaving many worried that the agreement won’t effectively mitigate the growing risks of advanced AI systems.  Furthermore,  discussions on crucial international oversight remain at an impasse, fueling fears of a potential AI arms race.  The lack of legally binding regulations is a significant setback for those advocating for stricter controls. We'll continue to follow this story and bring you updates as they develop."
+
+Error: Request failed with status code 401
+
+Please check your ElevenLabs API configuration.

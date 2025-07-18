@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "female",
+  "text": "Breaking news. The world of extreme sports is in mourning tonight following the tragic death of Felix Baumgartner.  The legendary skydiver, best known for his record-breaking stratospheric jump in 201...",
+  "duration": 93,
+  "timestamp": "2025-07-18T10:13:43.291Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

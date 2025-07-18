@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "neutral",
+  "text": "Welcome to News of the Hour - Your comprehensive one-hour global news briefing for Friday, July 18, 2025 at 12:31 PM GMT+3.\n\nI'm your AI news anchor, bringing you the most important stories from aroun...",
+  "duration": 4004,
+  "timestamp": "2025-07-18T09:31:32.054Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

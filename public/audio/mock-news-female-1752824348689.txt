@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "female",
+  "text": "Breaking news.  Good evening.  We have reports of a major development in the ongoing conflict in Ukraine. Ukrainian forces are claiming a significant breakthrough in their southern counteroffensive.  ...",
+  "duration": 81,
+  "timestamp": "2025-07-18T07:39:08.689Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

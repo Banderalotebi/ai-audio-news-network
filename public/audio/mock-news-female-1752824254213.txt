@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "female",
+  "text": "Breaking news. OpenAI has just unveiled GPT-6, its latest and most powerful large language model yet.  This groundbreaking AI promises to revolutionize how we create and interact with information.  Ea...",
+  "duration": 76,
+  "timestamp": "2025-07-18T07:37:34.213Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "neutral",
+  "text": "Breaking news.  We are saddened to report the death of Felix Baumgartner, the renowned Austrian skydiver.  Baumgartner, just 49 years old, died today in a paragliding accident near his home in Austria...",
+  "duration": 108,
+  "timestamp": "2025-07-18T10:15:35.531Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

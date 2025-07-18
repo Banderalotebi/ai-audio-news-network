@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "female",
+  "text": "Breaking news.  Ukrainian forces have launched a major counteroffensive in southern Ukraine.  This long-awaited push is focused on the Zaporizhzhia Oblast, targeting key Russian defensive lines near t...",
+  "duration": 74,
+  "timestamp": "2025-07-18T09:28:37.000Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

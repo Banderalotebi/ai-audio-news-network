@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎙️ AI Audio News Network - Advanced Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .control-group {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .control-group h3 {
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            color: #fff;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .category-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .category-btn.active {
+            background: rgba(76, 175, 80, 0.7);
+            border-color: rgba(76, 175, 80, 1);
+        }
+        
+        .voice-options {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .voice-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .voice-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .voice-btn.active {
+            background: rgba(33, 150, 243, 0.7);
+            border-color: rgba(33, 150, 243, 1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #2196F3, #21CBF3);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
+        }
+        
+        .action-btn.audio {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .action-btn.audio:hover {
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+        }
+        
+        .output {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: pre-wrap;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #fff;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .news-display {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .news-headline {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+        
+        .news-script {
+            line-height: 1.7;
+            font-size: 1.1em;
+        }
+        
+        .metadata {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .voice-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ AI Audio News Network</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <h3>📰 News Categories</h3>
+                <div id="categoriesGrid" class="categories-grid">
+                    <!-- Categories will be loaded dynamically -->
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>🎤 Voice Selection</h3>
+                <div class="voice-options">
+                    <button class="voice-btn active" data-voice="female">👩 Female</button>
+                    <button class="voice-btn" data-voice="male">👨 Male</button>
+                    <button class="voice-btn" data-voice="neutral">🤖 Neutral</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="action-btn" onclick="generateNews()">📰 Generate News</button>
+            <button class="action-btn audio" onclick="generateAudio()">🔊 Generate Audio</button>
+            <button class="action-btn" onclick="generateNewsOfTheHour()" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);">🎙️ News of the Hour</button>
+            <button class="action-btn" onclick="generatePDFEnhancedNews()" style="background: linear-gradient(45deg, #9B59B6, #8E44AD); box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);">📚 Magazine-Enhanced News</button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Generating news content...</div>
+        </div>
+        
+        <div id="newsDisplay" style="display: none;"></div>
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+    <script>
+        let selectedCategory = 'breaking';
+        let selectedVoice = 'female';
+        
+        // Load categories on page load
+        async function loadCategories() {
+            try {
+                const response = await fetch('/api/news/categories');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const grid = document.getElementById('categoriesGrid');
+                    grid.innerHTML = '';
+                    
+                    data.categories.forEach((category, index) => {
+                        const btn = document.createElement('button');
+                        btn.className = `category-btn ${index === 0 ? 'active' : ''}`;
+                        btn.dataset.category = category.id;
+                        btn.innerHTML = `
+                            <div style="font-weight: bold; margin-bottom: 5px;">${category.name}</div>
+                            <div style="font-size: 11px; opacity: 0.8;">${category.description}</div>
+                        `;
+                        btn.onclick = () => selectCategory(category.id);
+                        grid.appendChild(btn);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+        
+        function selectCategory(categoryId) {
+            selectedCategory = categoryId;
+            
+            // Update active state
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === categoryId) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        function selectVoice(voice) {
+            selectedVoice = voice;
+            
+            // Update active state
+            document.querySelectorAll('.voice-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.voice === voice) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        // Voice button event listeners
+        document.querySelectorAll('.voice-btn').forEach(btn => {
+            btn.onclick = () => selectVoice(btn.dataset.voice);
+        });
+        
+        async function generateNews() {
+            const loading = document.getElementById('loading');
+            const newsDisplay = document.getElementById('newsDisplay');
+            const output = document.getElementById('output');
+            
+            loading.style.display = 'block';
+            newsDisplay.style.display = 'none';
+            output.style.display = 'none';
+            
+            try {
+                const url = `/api/news/${selectedCategory}?voice=${selectedVoice}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                loading.style.display = 'none';
+                
+                if (data.success) {
+                    newsDisplay.innerHTML = `
+                        <div class="news-display">
+                            <div class="news-headline">${data.headline}</div>
+                            <div class="news-script">${data.script}</div>
+                            <div class="metadata">
+                                📂 Category: ${data.category}<br>
+                                🎤 Voice: ${data.voiceType}<br>
+                                🕒 Generated: ${new Date(data.timestamp).toLocaleString()}
+                            </div>
+                        </div>
+                    `;
+                    newsDisplay.style.display = 'block';
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                output.innerHTML = `❌ Error: ${error.message}`;
+                output.style.display = 'block';
+            }
+        }
+        
+        async function generateAudio() {
+            const loading = document.getElementById('loading');
+            const output = document.getElementById('output');
+            
+            loading.style.display = 'block';
+            output.style.display = 'none';
+            
+            try {
+                const url = `/api/news/${selectedCategory}/audio?voice=${selectedVoice}`;
+                const response = await fetch(url);
+                
+                loading.style.display = 'none';
+                
+                if (response.ok) {
+                    const contentType = response.headers.get('content-type');
+                    
+                    if (contentType && contentType.includes('audio')) {
+                        // Create audio element
+                        const audioBlob = await response.blob();
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        
+                        output.innerHTML = `
+                            <div style="text-align: center;">
+                                <h3>🎵 Audio Generated Successfully!</h3>
+                                <audio controls style="margin: 20px 0; width: 100%;">
+                                    <source src="${audioUrl}" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                                <br>
+                                <a href="${audioUrl}" download="${selectedCategory}-news.mp3" 
+                                   style="color: #FFD700; text-decoration: none;">
+                                    📥 Download Audio File
+                                </a>
+                            </div>
+                        `;
+                    } else {
+                        // JSON response
+                        const data = await response.json();
+                        output.innerHTML = `
+                            <div>
+                                <h3>ℹ️ Audio Generation Info</h3>
+                                <p>${data.message || 'Audio generation completed'}</p>
+                                ${data.script ? `<div style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;"><strong>Script:</strong><br>${data.script}</div>` : ''}
+                            </div>
+                        `;
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                output.style.display = 'block';
+            } catch (error) {
+                loading.style.display = 'none';
+                output.innerHTML = `❌ Error generating audio: ${error.message}`;
+                output.style.display = 'block';
+            }
+        }
+        
+        // Generate comprehensive News of the Hour
+        async function generateNewsOfTheHour() {
+            const loading = document.getElementById('loading');
+            const output = document.getElementById('output');
+            const newsDisplay = document.getElementById('newsDisplay');
+            
+            // Get selected voice
+            const selectedVoice = document.querySelector('.voice-btn.active').dataset.voice;
+            
+            loading.style.display = 'block';
+            output.style.display = 'none';
+            newsDisplay.style.display = 'none';
+            
+            try {
+                const response = await fetch(`/api/news/hourly/comprehensive?voice=${selectedVoice}`);
+                loading.style.display = 'none';
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Display comprehensive news information
+                        output.innerHTML = `
+                            <div style="text-align: center;">
+                                <h2>🎙️ News of the Hour Generated!</h2>
+                                <div style="margin: 20px 0; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                                    <p><strong>📊 Total Stories:</strong> ${data.totalStories}</p>
+                                    <p><strong>⏱️ Estimated Duration:</strong> ${data.estimatedDuration}</p>
+                                    <p><strong>🎤 Voice:</strong> ${data.voiceType}</p>
+                                    <p><strong>📅 Generated:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                                </div>
+                                
+                                <div style="margin: 20px 0;">
+                                    <h3>🔊 Listen to Your Comprehensive News Broadcast</h3>
+                                    <audio controls style="width: 100%; margin: 15px 0;" preload="metadata">
+                                        <source src="/audio/${data.audioFile}" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                    <div style="margin-top: 15px;">
+                                        <a href="/audio/${data.audioFile}" download="news-of-the-hour.mp3" 
+                                           style="color: #FFD700; text-decoration: none; font-size: 16px;">
+                                            📥 Download Complete News of the Hour (${data.estimatedDuration})
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin: 20px 0; text-align: left;">
+                                    <h3>📰 Story Breakdown:</h3>
+                                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; max-height: 300px; overflow-y: auto;">
+                                        ${data.segments.map((segment, index) => `
+                                            <div style="margin-bottom: 10px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                                <strong>${index + 1}. [${segment.category}]</strong><br>
+                                                <span style="color: #FFD700;">${segment.headline}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        throw new Error(data.error || 'Failed to generate News of the Hour');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                output.style.display = 'block';
+            } catch (error) {
+                loading.style.display = 'none';
+                output.innerHTML = `❌ Error generating News of the Hour: ${error.message}`;
+                output.style.display = 'block';
+            }
+        }
+        
+        // Generate PDF-Enhanced Magazine News Program
+        async function generatePDFEnhancedNews() {
+            const loading = document.getElementById('loading');
+            const output = document.getElementById('output');
+            const newsDisplay = document.getElementById('newsDisplay');
+            
+            // Get selected voice
+            const selectedVoice = document.querySelector('.voice-btn.active').dataset.voice;
+            
+            loading.style.display = 'block';
+            output.style.display = 'none';
+            newsDisplay.style.display = 'none';
+            
+            try {
+                const response = await fetch(`/api/news/hourly/comprehensive-plus?voice=${selectedVoice}`);
+                loading.style.display = 'none';
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Display comprehensive news information
+                        output.innerHTML = `
+                            <div style="text-align: center;">
+                                <h2>📚 Magazine-Enhanced News Program Generated!</h2>
+                                <div style="margin: 20px 0; padding: 20px; background: rgba(155, 89, 182, 0.2); border-radius: 15px;">
+                                    <p><strong>📊 Total Stories:</strong> ${data.totalStories}</p>
+                                    <p><strong>⏱️ Estimated Duration:</strong> ${data.estimatedDuration}</p>
+                                    <p><strong>🎤 Voice:</strong> ${data.voiceType}</p>
+                                    <p><strong>📖 Source Magazine:</strong> ${data.sourcePublication}</p>
+                                    <p><strong>🧠 AI-Enhanced:</strong> Breaking News + Magazine Analysis</p>
+                                    <p><strong>📅 Generated:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                                </div>
+                                
+                                <div style="margin: 20px 0;">
+                                    <h3>🔊 Listen to Your Extended News Program</h3>
+                                    <p style="color: #FFD700; margin-bottom: 15px;">Featuring breaking news + in-depth magazine analysis</p>
+                                    <audio controls style="width: 100%; margin: 15px 0;" preload="metadata">
+                                        <source src="/audio/${data.audioFile}" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                    <div style="margin-top: 15px;">
+                                        <a href="/audio/${data.audioFile}" download="magazine-enhanced-news.mp3" 
+                                           style="color: #FFD700; text-decoration: none; font-size: 16px;">
+                                            📥 Download Extended News Program (${data.estimatedDuration})
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin: 20px 0; text-align: left;">
+                                    <h3>📰 Content Breakdown:</h3>
+                                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; max-height: 400px; overflow-y: auto;">
+                                        ${data.segments.map((segment, index) => {
+                                            const isBreaking = segment.category === 'Breaking News';
+                                            const isMagazine = segment.category.startsWith('Magazine Analysis');
+                                            const bgColor = isBreaking ? 'rgba(255, 0, 0, 0.2)' : 
+                                                           isMagazine ? 'rgba(155, 89, 182, 0.2)' : 
+                                                           'rgba(255,255,255,0.1)';
+                                            const icon = isBreaking ? '🚨' : isMagazine ? '📖' : '📰';
+                                            return `
+                                            <div style="margin-bottom: 10px; padding: 10px; background: ${bgColor}; border-radius: 8px;">
+                                                <strong>${icon} ${index + 1}. [${segment.category}]</strong><br>
+                                                <span style="color: #FFD700;">${segment.headline}</span>
+                                            </div>
+                                        `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding: 15px; background: rgba(155, 89, 182, 0.1); border-radius: 10px;">
+                                    <h4>🎯 Program Features:</h4>
+                                    <ul style="text-align: left; color: #DDD;">
+                                        <li>🚨 Breaking news coverage</li>
+                                        <li>📖 Deep magazine analysis from The Economist</li>
+                                        <li>🌍 Global regional coverage</li>
+                                        <li>📊 Multi-category comprehensive reporting</li>
+                                        <li>🎙️ Professional broadcast format</li>
+                                        <li>⏱️ Extended duration for thorough coverage</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        throw new Error(data.error || 'Failed to generate Magazine-Enhanced News');
+                    }
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                output.style.display = 'block';
+            } catch (error) {
+                loading.style.display = 'none';
+                output.innerHTML = `❌ Error generating Magazine-Enhanced News: ${error.message}`;
+                output.style.display = 'block';
+            }
+        }
+        
+        // Load categories when page loads
+        window.onload = loadCategories;
+    </script>
+</body>
+</html>

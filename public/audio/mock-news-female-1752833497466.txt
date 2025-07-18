@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "female",
+  "text": "Breaking news. We interrupt this program with tragic news.  Legendary skydiver Felix Baumgartner has died at the age of 49.  Authorities in Austria confirm Baumgartner was involved in a paragliding ac...",
+  "duration": 105,
+  "timestamp": "2025-07-18T10:11:37.466Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

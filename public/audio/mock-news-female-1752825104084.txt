@@ -1,0 +1,8 @@
+{
+  "type": "mock-audio",
+  "voiceType": "female",
+  "text": "Demo summary: Demo News: Technology - 7/18/2025. This is demo content. Configure your Google AI API key to get real AI-generated news. (This is a demo response. Configure your Google AI API key for AI...",
+  "duration": 22,
+  "timestamp": "2025-07-18T07:51:44.084Z",
+  "message": "This is a demo audio file. Set ELEVENLABS_API_KEY or GOOGLE_TTS_API_KEY for real audio generation."
+}

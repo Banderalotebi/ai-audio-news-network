@@ -1,0 +1,7 @@
+Audio Generation Error
+
+Failed to generate speech for: "Demo summary: Demo News: Technology companies continue to advance AI capabilities. This is sample content while your API keys are being configured. Error details: Request failed with status code 401... (This is a demo response. Configure your OpenAI API key for AI-generated summaries.)"
+
+Error: Request failed with status code 401
+
+Please check your ElevenLabs API configuration.

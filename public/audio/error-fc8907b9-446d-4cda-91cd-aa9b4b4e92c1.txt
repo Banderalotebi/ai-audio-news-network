@@ -1,0 +1,7 @@
+Audio Generation Error
+
+Failed to generate speech for: "Good evening.  Breaking news from Geneva: The Global AI Safety Summit has concluded, leaving the world with a mixed bag when it comes to regulating artificial intelligence.  While participating nations did agree on voluntary guidelines for the development of advanced AI systems – focusing on safety research and transparency –  a major sticking point remains: binding international regulations.  Significant differences emerged on how to enforce these guidelines and exactly what future oversight should entail. This lack of firm, global commitment leaves many worried about the potential risks of unchecked AI advancement.  The summit's outcome highlights a clear division among world powers on how best to manage this rapidly evolving technology. We'll continue to follow this story and bring you updates as they develop."
+
+Error: Request failed with status code 401
+
+Please check your ElevenLabs API configuration.
